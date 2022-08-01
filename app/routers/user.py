@@ -17,6 +17,7 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     user.password = hashed_password
 
     new_user = models.User(**user.dict())
+    print("user.phone_number: ", user.phone_number)
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
