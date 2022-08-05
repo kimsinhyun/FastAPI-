@@ -1,0 +1,31 @@
+version: '3'
+services: 
+  api:
+    # build: .
+    image: kimsinhyun/fastapi
+    ports:
+      - 80:8000
+    # env_file:
+    #   - ./.env
+    environment:
+      - DATABASE_HOSTNAME=${DATABASE_HOSTNAME}   #아래에 있는 postgres 이미지의 ip를 사용하겠다는 의미
+      - DATABASE_PORT=${DATABASE_PORT}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_USERNAME=${DATABASE_USERNAME}
+      - SECRET_KEY=${SECRET_KEY}
+      - ALGORITHM=${ALGORITHM}
+      - ACCSES_TOKEN_EXPIRE_TIME=${ACCSES_TOKEN_EXPIRE_TIME}  
+    
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWOR=kjhyym415*
+      - POSTGRES_DB=fastapi
+
+    # container가 죽을 때마다 데이터가 사라지지 않게 volumn 설정
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+  
+volumes:
+  postgres-db:
